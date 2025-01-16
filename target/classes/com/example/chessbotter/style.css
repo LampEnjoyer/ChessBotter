@@ -1,0 +1,17 @@
+.chess-board{
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+}
+
+.chess-square-white{
+    -fx-background-color: #f0d9b5;
+    -fx-border-color: black;
+    -fx-border-width: 1.25px;
+}
+
+
+.chess-square-black{
+    -fx-background-color: #b58863;
+    -fx-border-color: black;
+    -fx-border-width: 1.25px;
+}

@@ -1,5 +1,6 @@
 package com.example.chessbotter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends ChessPiece{
@@ -7,13 +8,35 @@ public class Queen extends ChessPiece{
         super(isWhite);
     }
     @Override
-    public boolean validateMove(ChessPiece Piece, Position newPos, ChessPiece[][] board) {
-        return false;
+    public boolean isValidPosition(Position pos){
+        return pos.row < 8 && pos.row >=0 && pos.col >= 0 && pos.col < 8;
     }
 
     @Override
-    public List<Position> possibleMoves(ChessPiece[][] board) {
-        return List.of();
+    public List<Position> possibleMoves(ChessPiece[][] pieces) {
+        List<Position> moveList = new ArrayList<>();
+        int [][] directions = { {-1,-1} , {-1,1}, {1,1} , {1,-1} , {0,1}, {0,-1}, {1,0}, {-1,0}};
+        for(int [] dir : directions){
+            int row = position.row;
+            int col = position.col;
+            while(true){
+                row += dir[0];
+                col += dir[1];
+                if(!isValidPosition(new Position(row,col))){
+                    break;
+                }
+                ChessPiece targetPiece = pieces[row][col];
+                if(targetPiece == null){
+                    moveList.add(new Position(row,col));
+                }else{
+                    if(targetPiece.isWhite != isWhite()){
+                        moveList.add(new Position(row,col));
+                    }
+                    break;
+                }
+            }
+        }
+        return moveList;
     }
 
     protected String getImageName() {

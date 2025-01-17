@@ -30,15 +30,17 @@ public class MouseEventHandler implements EventHandler<MouseEvent> {
         }
     }
 
-    private void mouseClicked(MouseEvent e){
+    private void mouseClicked(MouseEvent e){ // Function for two click movement
         StackPane pane = (StackPane) e.getSource();
         int row = gridPane.getRowIndex(pane);
         int col = gridPane.getColumnIndex(pane);
-        if(firstClick){
+        if(firstClick){ //Stuff for first click
             if(!pane.getChildren().isEmpty()){
                 System.out.println("Piece selected at " + row + " , " + col);
                 selectedPiece = pieces[row][col];
-                if(selectedPiece.isWhite != (turnCounter % 2 == 0)){
+                List<ChessPiece.Position> moveList = selectedPiece.possibleMoves(pieces);
+                printPossibleMoves(moveList);
+                if(selectedPiece.isWhite != (turnCounter % 2 == 0)){ // Checking to see current turn
                     System.out.println("Not your piece");
                     return;
                 }
@@ -47,11 +49,10 @@ public class MouseEventHandler implements EventHandler<MouseEvent> {
                 System.out.println("Empty");
             }
         }else{
-            System.out.println("Piece selected at " + row + " , " + col);
+            System.out.println("Piece moved to " + row + " , " + col);
             int oldRow = selectedPiece.getPosition().row;
             int oldCol = selectedPiece.getPosition().col;
             List<ChessPiece.Position> moveList = selectedPiece.possibleMoves(pieces);
-            printPossibleMoves(moveList);
             if(moveList.contains(new ChessPiece.Position(row,col))){
                 pieces[oldRow][oldCol] = null;
                 selectedPiece.getPosition().row = row;
@@ -73,6 +74,4 @@ public class MouseEventHandler implements EventHandler<MouseEvent> {
            System.out.println(pos.row + " , " + pos.col);
         }
     }
-
-
 }

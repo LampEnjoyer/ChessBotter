@@ -9,33 +9,8 @@ public class Pawn extends ChessPiece{
         super(isWhite);
     }
     @Override
-    public boolean validateMove(ChessPiece Piece, Position newPos, ChessPiece[][] pieces) {
-        Position oldPos = Piece.getPosition();
-        int rowDiff = rowDifference(newPos);
-        int colDiff = colDifference(newPos);
-        ChessPiece targetPiece = pieces[newPos.row][newPos.col];
-        if(rowDiff == 0 && colDiff == 0){ //Same piece
-            return false;
-        }
-        int direction = isWhite ? -1 : 1;
-        int maxMove = firstMove ? 2 : 1;
-        if((newPos.row - oldPos.row) * direction <= 0){ // Backwards
-            return false;
-        }
-        if(rowDiff > maxMove || colDiff > 1){ //Tile Limitations
-            return false;
-        }
-        if(targetPiece != null && targetPiece.isWhite == Piece.isWhite){ //Can't capture its own
-            return false;
-        }
-        if( (colDiff == 0 ^ targetPiece == null)){
-            return false; //Can't move diagonally without capturing and can't move forward to capture
-        }
-        if(rowDiff == 2 && pieces[newPos.row - direction][newPos.col] != null){ // Can't jump over something when moving two
-            return false;
-        }
-        firstMove = false;
-        return true;
+    public boolean isValidPosition(Position pos){
+        return pos.row < 8 && pos.row >=0 && pos.col >= 0 && pos.col < 8;
     }
 
     @Override

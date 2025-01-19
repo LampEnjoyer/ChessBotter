@@ -54,12 +54,27 @@ public class MouseEventHandler implements EventHandler<MouseEvent> {
             int oldCol = selectedPiece.getPosition().col;
             List<ChessPiece.Position> moveList = selectedPiece.possibleMoves(pieces);
             if(moveList.contains(new ChessPiece.Position(row,col))){
+                //Making move temporarily
                 pieces[oldRow][oldCol] = null;
                 selectedPiece.getPosition().row = row;
                 selectedPiece.getPosition().col = col;
+                ChessPiece capturedPiece = pieces[row][col]; //Storing captured piece in case we move our king into check
                 pieces[row][col] = selectedPiece;
-                chessBoard.updateDisplay();
-                turnCounter++;
+                if(isKinginCheck(selectedPiece.isWhite)){
+                    //undo Move
+                    pieces[oldRow][oldCol] = selectedPiece;
+                    selectedPiece.getPosition().row = oldRow;
+                    selectedPiece.getPosition().col = oldCol;
+                    pieces[row][col] = capturedPiece;
+                    System.out.println("Move would put king in check");
+                    selectedPiece = null;
+                }else {
+                    chessBoard.updateDisplay();
+                    turnCounter++;
+                    if(isKinginCheck(!selectedPiece.isWhite)){
+                        System.out.println("Check!");
+                    }
+                }
             }else{
                 selectedPiece = null;
                 System.out.println("Not a Valid Move");
@@ -73,5 +88,30 @@ public class MouseEventHandler implements EventHandler<MouseEvent> {
         for(ChessPiece.Position pos : list){
            System.out.println(pos.row + " , " + pos.col);
         }
+    }
+
+    private boolean isKinginCheck(boolean isWhite){
+        ChessPiece.Position kingPos = null; //Finding king position
+        for(int i = 0; i<8; i++){
+            for(int j = 0; j<8; j++){
+                ChessPiece piece = pieces[i][j];
+                if(piece != null && piece instanceof King && piece.isWhite == isWhite){
+                    kingPos = new ChessPiece.Position(i,j);
+                    break; //breaking inner loop when we find king
+                }
+            }
+            if(kingPos != null){break;} //brealomg outer loop when we find king
+        }
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                ChessPiece piece = pieces[i][j];
+                if(piece != null && piece.isWhite != isWhite) {
+                    if(piece.possibleMoves(pieces).contains(kingPos)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

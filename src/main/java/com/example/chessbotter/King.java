@@ -1,5 +1,6 @@
 package com.example.chessbotter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class King extends ChessPiece{
@@ -16,6 +17,12 @@ public class King extends ChessPiece{
 
     @Override
     public List<Position> possibleMoves(ChessPiece[][] pieces) {
+        List<Position> moveList = new ArrayList<>();
+        int [][] directions = { {-1,-1} , {-1,1}, {1,1} , {1,-1} , {0,1}, {0,-1}, {1,0}, {-1,0}};
+        for(int dir [] : directions){
+            int row = position.row;
+            int col = position.col;
+        }
         return List.of();
     }
 

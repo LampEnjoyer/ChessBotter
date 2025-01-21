@@ -55,7 +55,7 @@ public abstract class ChessPiece {
         this.position = position;
     }
 
-    public abstract boolean validateMove(ChessPiece Piece, Position newPos, ChessPiece[][] board);
+    public abstract boolean isValidPosition(Position newPos);
 
     public abstract List<Position> possibleMoves(ChessPiece[][] pieces);
 

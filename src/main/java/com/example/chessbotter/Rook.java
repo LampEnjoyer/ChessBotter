@@ -11,21 +11,6 @@ public class Rook extends ChessPiece{
         super(isWhite);
     }
 
-    @Override
-    public boolean validateMove(ChessPiece Piece, Position newPos, ChessPiece[][] pieces) {
-//        Position oldPos = Piece.getPosition();
-//        ChessPiece targetPiece = pieces[newPos.row][newPos.col];
-//        if(targetPiece.isWhite == isWhite && !(targetPiece instanceof King)){ //Own piece besides King
-//            return false;
-//        }
-//        if(newPos.row != oldPos.row && newPos.col != oldPos.col){ //Can't move diagonally
-//            return false;
-//        }
-//        int rowDiff = rowDifference(newPos);
-//        int colDiff = rowDifference(newPos);
-
-        return true;
-    }
 
     @Override
     public List<Position> possibleMoves(ChessPiece[][] pieces) {
@@ -40,13 +25,15 @@ public class Rook extends ChessPiece{
                 if(!isValidPosition(new Position(row,col))){
                     break;
                 }
-                if(pieces[row][col] == null){
+                ChessPiece targetPiece = pieces[row][col];
+                if(targetPiece == null){
                     moveList.add(new Position(row,col));
+                }else{
+                    if(targetPiece.isWhite != isWhite()){
+                        moveList.add(new Position(row,col));
+                    }
+                    break;
                 }
-                if(pieces[row][col].isWhite != this.isWhite){
-                    moveList.add(new Position(row,col));
-                }
-                break; //Can't move through pieces
             }
         }
         return moveList;
@@ -65,7 +52,8 @@ public class Rook extends ChessPiece{
         return Math.abs(this.getPosition().col - pos.col);
     }
 
-    private boolean isValidPosition(Position pos){
+    @Override
+    public boolean isValidPosition(Position pos){
         return pos.row < 8 && pos.row >=0 && pos.col >= 0 && pos.col < 8;
     }
 

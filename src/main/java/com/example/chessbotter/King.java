@@ -1,5 +1,6 @@
 package com.example.chessbotter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class King extends ChessPiece{
@@ -10,22 +11,18 @@ public class King extends ChessPiece{
     }
 
     @Override
-    public boolean validateMove(ChessPiece Piece, Position newPos, ChessPiece[][] pieces) {
-        Position oldPos = Piece.getPosition();
-        int rowDiff = rowDifference(newPos);
-        int colDiff = colDifference(newPos);
-        ChessPiece targetPiece = pieces[newPos.row][newPos.col];
-        if(targetPiece != null && targetPiece.isWhite == isWhite){
-            return false;
-        }
-        if((rowDiff > 1 || colDiff > 1) || (rowDiff == 0 && colDiff == 0)){
-            return false;
-        }
-        return true;
+    public boolean isValidPosition(Position pos){
+        return pos.row < 8 && pos.row >=0 && pos.col >= 0 && pos.col < 8;
     }
 
     @Override
     public List<Position> possibleMoves(ChessPiece[][] pieces) {
+        List<Position> moveList = new ArrayList<>();
+        int [][] directions = { {-1,-1} , {-1,1}, {1,1} , {1,-1} , {0,1}, {0,-1}, {1,0}, {-1,0}};
+        for(int dir [] : directions){
+            int row = position.row;
+            int col = position.col;
+        }
         return List.of();
     }
 
@@ -42,6 +39,4 @@ public class King extends ChessPiece{
     public int colDifference(Position pos) {
         return Math.abs(this.getPosition().col - pos.col);
     }
-
-
 }

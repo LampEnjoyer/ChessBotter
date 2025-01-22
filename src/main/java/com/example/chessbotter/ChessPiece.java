@@ -75,6 +75,8 @@ public abstract class ChessPiece {
         }
     }
 
+    public abstract List<Position> getLegalMoves(ChessPiece[][] pieces);
+
     public abstract int rowDifference(Position pos);
 
     public abstract int colDifference(Position pos);

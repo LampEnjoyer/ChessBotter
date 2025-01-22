@@ -8,8 +8,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 public class ChessBoard {
-    private final ChessPiece [][] pieces;
+    private ChessPiece [][] pieces;
     private final GridPane gridPane;
+    public boolean gameOver = false;
 
     public ChessBoard(GridPane gridPane){
         this.gridPane = gridPane;
@@ -96,4 +97,5 @@ public class ChessBoard {
             }
         }
     }
+
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends ChessPiece{
-    private boolean canCastle;
+    public boolean canCastle;
     public Rook(boolean isWhite){
         super(isWhite);
     }
@@ -37,6 +37,54 @@ public class Rook extends ChessPiece{
             }
         }
         return moveList;
+    }
+    @Override
+    public List<Position> getLegalMoves(ChessPiece[][] pieces){
+        List<Position> moveList = possibleMoves(pieces);
+        List<Position> legalMoves = new ArrayList<>();
+        for(Position move : moveList){
+            int oldRow = position.row;
+            int oldCol = position.col;
+            ChessPiece capturedPiece = pieces[move.row][move.col];
+            pieces[oldRow][oldCol] = null; //Simulating the move
+            position.row = move.row;
+            position.col = move.col;
+            pieces[move.row][move.col] = this;
+            if(!isKingInCheck(pieces)) {
+
+                legalMoves.add(move);
+            }
+            pieces[oldRow][oldCol] = this; //undoing the move
+            position.row = oldRow;
+            position.col = oldCol;
+            pieces[move.row][move.col] = capturedPiece;
+        }
+        return legalMoves;
+    }
+
+    private boolean isKingInCheck(ChessPiece [][] pieces){
+        ChessPiece.Position kingPos = null; //Finding king position
+        for(int i = 0; i<8; i++){
+            for(int j = 0; j<8; j++){
+                ChessPiece piece = pieces[i][j];
+                if(piece != null && piece instanceof King && piece.isWhite == isWhite){
+                    kingPos = new ChessPiece.Position(i,j);
+                    break; //breaking inner loop when we find king
+                }
+            }
+            if(kingPos != null){break;} //brealomg outer loop when we find king
+        }
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                ChessPiece piece = pieces[i][j];
+                if(piece != null && piece.isWhite != isWhite) {
+                    if(piece.possibleMoves(pieces).contains(kingPos)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     protected String getImageName() {

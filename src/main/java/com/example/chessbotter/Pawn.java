@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends ChessPiece{
-    private boolean firstMove = true;
+    public boolean firstMove = true;
     public Pawn(boolean isWhite){
         super(isWhite);
     }
@@ -19,19 +19,67 @@ public class Pawn extends ChessPiece{
         int direction = isWhite ? -1 : 1;
         int row = position.row + direction;
         int col = position.col;
-        if(pieces[row][col] == null){
+        if(isValidPosition(new Position(row,col)) && pieces[row][col] == null){
             moveList.add(new Position(row,col));
         }
         if(firstMove && pieces[row + direction][col] == null){
             moveList.add(new Position(row+direction,col));
-        }
-        if(col+1 < 8 && pieces[row][col + 1] != null && pieces[row][col + 1].isWhite != isWhite){
-            moveList.add(new Position(row,col+1));
-        }
-        if(col-1 > 0 && pieces[row][col - 1] != null && pieces[row][col - 1].isWhite != isWhite){
-            moveList.add(new Position(row,col-1));
+        } //Left side take
+        if(isValidPosition(new Position(row,col+1)) && pieces[row][col+1] != null && pieces[row][col+1].isWhite != isWhite){
+            moveList.add(new Position(row, col +1));
+        } //Right side take
+        if(isValidPosition(new Position(row,col-1)) && pieces[row][col-1] != null && pieces[row][col-1].isWhite != isWhite){
+            moveList.add(new Position(row, col -1));
         }
         return moveList;
+    }
+    @Override
+    public List<Position> getLegalMoves(ChessPiece[][] pieces){
+        List<Position> moveList = possibleMoves(pieces);
+        List<Position> legalMoves = new ArrayList<>();
+        for(Position move : moveList){
+            int oldRow = position.row;
+            int oldCol = position.col;
+            ChessPiece capturedPiece = pieces[move.row][move.col];
+            pieces[oldRow][oldCol] = null; //Simulating the move
+            position.row = move.row;
+            position.col = move.col;
+            pieces[move.row][move.col] = this;
+            if(!isKingInCheck(pieces)) {
+
+                legalMoves.add(move);
+            }
+            pieces[oldRow][oldCol] = this; //undoing the move
+            position.row = oldRow;
+            position.col = oldCol;
+            pieces[move.row][move.col] = capturedPiece;
+        }
+        return legalMoves;
+    }
+
+    private boolean isKingInCheck(ChessPiece [][] pieces){
+        ChessPiece.Position kingPos = null; //Finding king position
+        for(int i = 0; i<8; i++){
+            for(int j = 0; j<8; j++){
+                ChessPiece piece = pieces[i][j];
+                if(piece != null && piece instanceof King && piece.isWhite == isWhite){
+                    kingPos = new ChessPiece.Position(i,j);
+                    break; //breaking inner loop when we find king
+                }
+            }
+            if(kingPos != null){break;} //brealomg outer loop when we find king
+        }
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                ChessPiece piece = pieces[i][j];
+                if(piece != null && piece.isWhite != isWhite) {
+                    if(piece.possibleMoves(pieces).contains(kingPos)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
     protected String getImageName() {
         return (isWhite ? "white" : "black") + "_pawn";

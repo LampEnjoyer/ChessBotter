@@ -6,8 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="81f4960a-8da9-42cd-9132-e278aa769e61" name="Changes" comment="Pretty much everything besides checks">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/Bishop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/Bishop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/ChessBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/ChessBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/ChessPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/ChessPiece.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/King.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/Knight.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/MouseEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/MouseEventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/Pawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/Pawn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/Queen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/Queen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/Rook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/chessbotter/Rook.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
